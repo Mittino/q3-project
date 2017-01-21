@@ -2,9 +2,11 @@
 
 const express = require('express');
 const app = express();
-// const knex = require('./knex');
 
 var port = 5000;
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 const users = require('./routes/users');
 const posts = require('./routes/posts');

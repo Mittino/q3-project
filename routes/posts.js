@@ -14,6 +14,7 @@ const {camelizeKeys, decamelizeKeys} = require('humps');
 //get all posts
 router.get('/', (req, res) => {
   knex('posts')
+  .orderBy('id')
   .then((data) => {
     res.send(data);
   });
