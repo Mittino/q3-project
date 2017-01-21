@@ -2,16 +2,17 @@
 
 const express = require('express');
 const app = express();
-const knex = require('./knex');
+// const knex = require('./knex');
 
 var port = 5000;
 
-app.get('/users', function (req, res) {
-  knex('users')
-    .then((data) => {
-      res.send(data);
-    });
-});
+const users = require('./routes/users');
+const posts = require('./routes/posts');
+const comments = require('./routes/comments');
+
+app.use('/api/users', users);
+app.use('/api/posts', posts);
+app.use('/api/comments', comments);
 
 app.listen(port, function () {
   console.log('Listening on port', port);
