@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
     table.string('email').notNullable();
     table.text('user_bio').defaultTo('');
     table.integer('zip_code').defaultTo(80302);
-    table.integer('phone_number').notNullable();
+    table.string('phone_number').notNullable();
     table.string('profile_url').defaultTo('');
     table.string('website').defaultTo('');
     table.boolean('is_admin').defaultTo(false);
