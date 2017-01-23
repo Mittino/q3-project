@@ -7,7 +7,23 @@ exports.seed = function(knex, Promise) {
         // Inserts seed entries
         knex('user_skills').insert({
           id: 1,
-          user_id: 1
+          user_id: 1,
+          skill_id: 1
+        }),
+        knex('user_skills').insert({
+          id: 2,
+          user_id: 1,
+          skill_id: 2
+        }),
+        knex('user_skills').insert({
+          id: 3,
+          user_id: 2,
+          skill_id: 2
+        }),
+        knex('user_skills').insert({
+          id: 4,
+          user_id: 2,
+          skill_id: 3
         })
       ])
       .then(() => {
