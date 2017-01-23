@@ -20,7 +20,7 @@ const App = React.createClass({
   },
 
   render(){
-    <div>Test</div>;
+    //<div>Test</div>;
     return(
       <div> TESTING </div>
     );
