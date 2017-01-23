@@ -15,11 +15,14 @@ const bcrypt = require('bcrypt-as-promised');
 //get all users
 router.get('/', (req, res) => {
   knex('users')
-  .orderBy('id')
+  .join('user_skills', 'users.id', '=', 'user_skills.user_id')
+  // .join('skills', 'user_skills.skill_id', '=', 'skills.id')
+  // .orderBy('user.id')
   .then((data) => {
     res.send(data);
   });
 });
+
 
 //get users by id
 router.get('/:id', (req, res) => {
