@@ -33,7 +33,6 @@ router.get('/:id', (req, res) => {
         delete output.skillId;
         delete output.id;
         res.send(output)
-
   });
 });
 
