@@ -1,6 +1,6 @@
 import React from 'react';
 import request from 'superagent';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 // import Comment from './Comment.js';
 // import Landing from './Landing.js';
 // import Nav from './Nav.js';
@@ -17,7 +17,7 @@ const App = React.createClass({
 
   componentDidUpdate(){
     console.log('updated')
-  }
+  },
 
   render(){
     <div>Test</div>;
