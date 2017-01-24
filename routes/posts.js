@@ -7,6 +7,8 @@ const router = express.Router();
 const knex = require('../knex');
 
 const {camelizeKeys, decamelizeKeys} = require('humps');
+const boom = require('boom');
+
 
 //ROUTES ------------------------------------------------
 
@@ -15,8 +17,8 @@ router.get('/', (req, res) => {
     knex('posts')
     .select('posts.id', 'description', 'location', 'budget', 'img_url', 'created_at')
     .join('users', 'posts.user_id', '=', 'users.id')
-    .join('post_skills', 'posts.id', '=', 'post_skills.post_id')
-    .join('skills', 'post_skills.skill_id', '=', 'skills.id')
+    .leftJoin('post_skills', 'posts.id', '=', 'post_skills.post_id')
+    .leftJoin('skills', 'post_skills.skill_id', '=', 'skills.id')
     .select('user_id', 'users.username', 'users.user_bio', 'skills.skill_name', 'post_skills.skill_id')
     .then((data) => {
         data = camelizeKeys(data);
@@ -100,21 +102,29 @@ router.post('/:userId', (req, res, next)=>{
     description: req.body.description,
     location: req.body.location,
     budget: req.body.budget,
-    img_url: req.body.img_url
+    img_url: req.body.imgUrl
   }
   knex('posts')
   .insert(newPost, '*')
   .then((addedPost)=> {
     addedPost = camelizeKeys(addedPost);
-      for (var skill in req.body.skills) {
+    let theSkills = req.body.skills;
+    console.log(theSkills);
+    for (var i = 0; i < theSkills.length; i++) {
+      console.log(theSkills[i]);
         knex('post_skills')
         .insert({
-          skill_id: skill,
+          skill_id: theSkills[i],
           post_id: addedPost[0].id
+        }).then((res)=>{
+          console.log(res);
         })
-      }
-      res.send(addedPost)
-  })//closes the then
+    } //end for loop for adding skills
+    return addedPost
+  }).then((addedPost)=>{
+    res.send(addedPost)
+  })
+  //closes the then
   .catch((err) => {
         console.error(err);
         next(boom.create(400, 'Failed'));
@@ -130,22 +140,19 @@ router.delete('/:id', (req,res,next)=>{
     if (!response) {
       next(boom.create(400, 'Post does not exist'));
     }
+    let toDelete = camelizeKeys(response)
     return knex('posts')
-    .where('id', req.params.id)
+    .where('id', toDelete.id)
     .del()
     .then((deleted)=>{
-      res.send(camelizeKeys(deleted))
-    })
-    .catch((err) => {
+      // delete toDelete.id
+      res.send(toDelete)
+    }).catch((err) => {
           console.error(err);
-          next(boom.create(400, 'Failed'));
-        });
-  })
-  .catch((err) => {
-        console.error(err);
-        next(boom.create(400, 'Failed'));
-      });
-})
+          next(boom.create(400, 'Failed2'));
+        })
+  });
+});
 
 // EXPORTS ---------------------------
 module.exports = router;
