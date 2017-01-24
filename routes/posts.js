@@ -87,12 +87,33 @@ router.get('/:id', (req, res) => {
         res.send(finalData);
     });
 });
-//get comments for posts
-// router.get('/:id/comments', (req, res) => {
-//     knex('comments').where('post_id', req.params.id).then((data) => {
-//         res.send(data);
-//     });
-// });
+
+router.post('/:userId', (req, res, next)=>{
+  var newPost = {
+    user_id: req.params.userId,
+    description: req.body.description,
+    location: req.body.location,
+    budget: req.body.budget,
+    img_url: req.body.img_url
+  }
+  knex('posts')
+  .insert(newPost, '*')
+  .then((addedPost)=> {
+    addedPost = camelizeKeys(addedPost);
+    if (req.body.skills.length === 0) {
+      res.send(addedPost)
+    } else {
+      for (var skill in req.body.skills) {
+        knex('post_skills')
+        .insert({
+          skill_id: skill,
+          post_id: addedPost[0].id
+        })
+      }
+      res.send(addedPost)
+    }
+  })
+})//router.post close
 
 // EXPORTS ---------------------------
 module.exports = router;
