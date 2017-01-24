@@ -8,7 +8,7 @@ exports.seed = function(knex, Promise) {
         knex('user_skills').insert({
           id: 1,
           user_id: 1,
-          skill_id: 1
+          skill_id: 3
         }),
         knex('user_skills').insert({
           id: 2,

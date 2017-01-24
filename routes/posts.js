@@ -111,8 +111,8 @@ router.post('/:userId', (req, res, next)=>{
         })
       }
       res.send(addedPost)
-    }
-  })
+    }//closes the else
+  })//closes the then
 })//router.post close
 
 // EXPORTS ---------------------------

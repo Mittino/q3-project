@@ -5,12 +5,12 @@ exports.seed = function(knex, Promise) {
             // Inserts seed entries
             knex('post_skills').insert({
               id: 1,
-              skill_id: 1,
+              skill_id: 4,
               post_id: 1
             }),
             knex('post_skills').insert({
               id: 2,
-              skill_id: 1,
+              skill_id: 4,
               post_id: 2
             }),
             knex('post_skills').insert({

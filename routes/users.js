@@ -13,9 +13,16 @@ const boom = require('boom');
 //ROUTES ------------------------------------------------
 
 //get user by id
-router.get('/:id', (req, res) => {
-    knex('users').where('users.id', req.params.id).join('user_skills', 'users.id', '=', 'user_skills.user_id').join('skills', 'user_skills.skill_id', '=', 'skills.id').then((data) => {
-
+router.get('/:id', (req, res, next) => {
+    knex('users')
+    .where('users.id', req.params.id)
+    .leftJoin('user_skills', 'users.id', '=', 'user_skills.user_id')
+    .leftJoin('skills', 'user_skills.skill_id', '=', 'skills.id')
+    .then((data) => {
+      console.log(camelizeKeys(data));
+      // if (data.length === 0 && data[0].skillId === null) { //user doesn't exist
+      //   res.send(camelizeKeys(data));
+      // } else {
         var camData = camelizeKeys(data);
 
         var output = camData[0];
@@ -29,6 +36,8 @@ router.get('/:id', (req, res) => {
         delete output.skillId;
         delete output.id;
         res.send(output)
+      // }
+
     });
 });
 
@@ -101,6 +110,31 @@ router.post('/', (req, res, next) => {
         }
     }) //first then
 }) //overall post
+
+router.patch('/:id', (req,res,next)=>{
+  knex('users')
+  .where('id', req.params.id)
+  .then((result)=>{
+    if (!result[0]) {
+      next(boom.create(400, 'User doesn\'t exist.'));
+    }
+    knex('users')
+    .where('id', req.params.id)
+    .update({
+      first_name: req.body.firstName,
+      last_name: req.body.lastName,
+      user_bio: req.body.userBio,
+      zip_code: req.body.zipCode,
+      phone_number: req.body.phoneNumber,
+      profile_url: req.body.profileUrl,
+      website: req.body.website
+    }, '*')
+    .then((result)=>{
+      result = camelizeKeys(result);
+      res.send(result)
+    })//end second then for update
+  })//end first then
+})//end router.patch
 
 // EXPORTS ---------------------------
 module.exports = router;
