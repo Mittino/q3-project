@@ -6,9 +6,10 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return Promise.all([
         // Inserts seed entries
-        knex('skills').insert({id: 1, skill_name: 'painting'}),
-        knex('skills').insert({id: 2, skill_name: 'drawing'}),
-        knex('skills').insert({id: 3, skill_name: 'sculpting'}),
+        knex('skills').insert({id: 1, skill_name: 'none'}),
+        knex('skills').insert({id: 2, skill_name: 'painting'}),
+        knex('skills').insert({id: 3, skill_name: 'drawing'}),
+        knex('skills').insert({id: 4, skill_name: 'sculpting'}),
       ]);
     });
 };
