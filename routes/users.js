@@ -39,16 +39,24 @@ router.post('/', (req, res, next) => {
     if (!req.body.email) {
         return next(boom.create(400, 'Email must not be blank'));
     }
+    if (!req.body.username) {
+        return next(boom.create(400, 'Username must not be blank'));
+    }
     //if there is not password error
     if (!req.body.password) {
         return next(boom.create(400, 'Password must not be blank'));
     }
 
-    knex('users').where('email', req.body.email).first().then((result) => {
+    knex('users').where('email', req.body.email)
+    .first()
+    .then((result) => {
         if (result) {
             next(boom.create(400, 'Account already exists'));
         } else {
-            knex('users').where('username', req.body.username).first().then((usernameResult) => {
+            knex('users')
+            .where('username', req.body.username)
+            .first()
+            .then((usernameResult) => {
                 // if there is a result that means that username is already in the database
                 if (usernameResult) {
                     next(boom.create(400, 'Username is taken'));
@@ -68,9 +76,10 @@ router.post('/', (req, res, next) => {
                         "website": req.body.website,
                         "is_admin": false
                     };
-                    // res.send(newUser);
-                    knex('users').insert(newUser, '*')
+                    knex('users')
+                    .insert(newUser, '*')
                     .then((newUser) => {
+                      // console.log(newUser);
                         var addingSkills = req.body.skills;
                         if (addingSkills.length === 0) {
                             res.send(newUser);
@@ -79,7 +88,7 @@ router.post('/', (req, res, next) => {
                                 knex('user_skills')
                                 .insert({
                                   skill_id: addingSkills[i],
-                                  user_id: newUser[id]
+                                  user_id: newUser[0].id
                                 }, '*')
                                 .then(() => {
                                   res.send(newUser);
