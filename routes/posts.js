@@ -15,7 +15,7 @@ const boom = require('boom');
 //get all posts
 router.get('/', (req, res) => {
     knex('posts')
-    .select('posts.id', 'description', 'location', 'budget', 'img_url', 'created_at')
+    .select('posts.id', 'title', 'description', 'location', 'budget', 'img_url', 'created_at')
     .join('users', 'posts.user_id', '=', 'users.id')
     .leftJoin('post_skills', 'posts.id', '=', 'post_skills.post_id')
     .leftJoin('skills', 'post_skills.skill_id', '=', 'skills.id')
@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
             } else {
                 finalData[data[obj].id] = {
                     "id": data[obj].id,
+                    "title": data[obj].title,
                     "description": data[obj].description,
                     "location": data[obj].location,
                     "budget": data[obj].budget,
@@ -56,7 +57,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     knex('posts')
     .where('posts.id', req.params.id)
-    .select('posts.id', 'description', 'location', 'budget', 'img_url', 'created_at')
+    .select('posts.id', 'title', 'description', 'location', 'budget', 'img_url', 'created_at')
     .join('users', 'posts.user_id', '=', 'users.id')
     .join('post_skills', 'posts.id', '=', 'post_skills.post_id')
     .join('skills', 'post_skills.skill_id', '=', 'skills.id')
@@ -74,6 +75,7 @@ router.get('/:id', (req, res) => {
             } else {
                 finalData[data[obj].id] = {
                     "id": data[obj].id,
+                    "title": data[obj].title,
                     "description": data[obj].description,
                     "location": data[obj].location,
                     "budget": data[obj].budget,
