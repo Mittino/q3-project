@@ -12,9 +12,12 @@ const {camelizeKeys, decamelizeKeys} = require('humps');
 
 //get all posts
 router.get('/', (req, res) => {
-    knex('posts').select('posts.id', 'description', 'location', 'budget', 'img_url', 'created_at').join('users', 'posts.user_id', '=', 'users.id').join('post_skills', 'posts.id', '=', 'post_skills.post_id').join('skills', 'post_skills.skill_id', '=', 'skills.id')
-    // .orderBy('id')
-        .select('user_id', 'users.username', 'users.user_bio', 'skills.skill_name', 'post_skills.skill_id').then((data) => {
+    knex('posts')
+    .select('posts.id', 'description', 'location', 'budget', 'img_url', 'created_at')
+    .join('users', 'posts.user_id', '=', 'users.id')
+    .join('post_skills', 'posts.id', '=', 'post_skills.post_id')
+    .join('skills', 'post_skills.skill_id', '=', 'skills.id')
+    .select('user_id', 'users.username', 'users.user_bio', 'skills.skill_name', 'post_skills.skill_id').then((data) => {
         data = camelizeKeys(data);
 
         let finalData = {}

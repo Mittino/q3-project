@@ -10,24 +10,6 @@ const {camelizeKeys, decamelizeKeys} = require('humps');
 
 //ROUTES ------------------------------------------------
 
-//get all comments
-// router.get('/', (req, res) => {
-//   knex('comments')
-//   .orderBy('id')
-//   .then((data) => {
-//     res.send(data);
-//   });
-// });
-
-//get comments by user_id (possibly so users can see their own comments)
-// router.get('/user/:id', (req, res) => {
-//   knex('comments')
-//   .where('user_id', req.params.id)
-//   .then((data) => {
-//     res.send(data);
-//   });
-// });
-
 //get comments by post id
 router.get('/:postId', (req, res) => {
   knex('posts')
@@ -36,10 +18,30 @@ router.get('/:postId', (req, res) => {
   .join('users', 'comments.user_id', '=', 'users.id')
   .select('posts.id', 'comment_body', 'comments.created_at', 'users.profile_url', 'users.username', 'comments.user_id')
   .then((data) => {
-    res.send(data)
+    data = camelizeKeys(data);
+    res.send(data);
   })
+  .catch((err) => {
+      next(err);
+    });
 })
 
+router.post('/', (req, res, next) =>{
+  let adding = {
+    user_id: req.body.userId,
+    post_id: req.body.postId,
+    comment_body: req.body.commentBody
+  }
+  console.log(adding);
+  knex('comments')
+  .insert(adding, '*')
+  .then((result) => {
+    res.send(camelizeKeys(result[0]));
+  })
+  .catch((err) => {
+      next(err);
+    });
+})
 
 // EXPORTS ---------------------------
 module.exports = router;
