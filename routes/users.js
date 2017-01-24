@@ -37,10 +37,14 @@ router.get('/:id', (req, res) => {
   });
 });
 
+//POST to users -----------------------------------
+
 router.post('/', (req, res, next) => {
+  //if there is no email error
   if (!req.body.email) {
     return next(boom.create(400, 'Email must not be blank'));
   }
+  //if there is not password error
   if (!req.body.password) {
     return next(boom.create(400, 'Password must not be blank'));
   }
@@ -48,16 +52,18 @@ router.post('/', (req, res, next) => {
   knex('users')
   .where('email', req.body.email)
   .then((result)=>{
-    if(result){
-      next(boom.create(400, 'Account already exists'));
-    }
-    knex('users')
+    //if there is a result that means that email is already in the database
+    // if(result){
+    //   next(boom.create(400, 'Account already exists'));
+    // }
+    return knex('users')
     .where('username', req.body.username)
     .then((usernameResult)=>{
-      if (usernameResult) {
-        next(boom.create(400, 'Username is taken'));
-      }
-      return bycrypt.hash(req.body.password, 12)
+      //if there is a result that means that username is already in the database
+      // if (usernameResult) {
+      //   next(boom.create(400, 'Username is taken'));
+      // }
+      return bcrypt.hash(req.body.password, 12)
       .then((hashedPassword)=>{
         var newUser = {
           "first_name": req.body.firstName,
@@ -72,47 +78,40 @@ router.post('/', (req, res, next) => {
           "website": req.body.website,
           "is_admin": false
         };
-        var addingSkills = req.body.skills;
-        if (addingSkills.length === 0) {
-          knex('users')
-          .where('email', req.body.email)
-          .first()
-          .then((dataToSend)=>{
-            res.send(dataToSend)
-          })
-        }
 
         knex('users')
         .insert(newUser, ['id'])
         .then((userId) => {
-          for (var i = 0; i < addingSkills.length; i++) {
-            knex('user-skills')
-            .insert({
-              skill_id: addingSkills[i],
-              user_id: userId
+          var addingSkills = req.body.skills;
+          if (addingSkills.length === 0) {
+            knex('users')
+            .where('email', req.body.email)
+            .first()
+            .then((dataToSend)=>{
+              res.send(dataToSend)
             })
-            .then(()=>{
+          } else{
+            for (var i = 0; i < addingSkills.length; i++) {
+              knex('user-skills')
+              .insert({
+                skill_id: addingSkills[i],
+                user_id: userId
+              })
+            }
+            // .then(()=>{
               knex('users')
               .where('email', req.body.email)
               .first()
               .then((dataToSend)=>{
                 res.send(dataToSend)
               })
-            })
+            // })
           }
         })
       })
     })
   })
 })
-//get users by id
-// router.get('/:id', (req, res) => {
-//   knex('users')
-//   .where('id', req.params.id)
-//   .then((data) => {
-//     res.send(data);
-//   });
-// });
 
 // EXPORTS ---------------------------
 module.exports = router;

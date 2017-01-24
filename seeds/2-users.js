@@ -24,9 +24,9 @@ exports.seed = function(knex, Promise) {
           email: 'sd@420universe.uk',
           phone_number: '1800-toll-free',
         })
-        .then(() => {
-          return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users))");
-        })
-      ]);
+      ])
+      .then(() => {
+        return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users))");
+      })
     });
 };
