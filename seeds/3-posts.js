@@ -9,12 +9,14 @@ exports.seed = function(knex, Promise) {
         knex('posts').insert({
           id: 1,
           user_id: 1,
+          title: 'A serious job',
           description: 'I need someone to paint the inside of my dungeon',
           budget: 150,
         }),
         knex('posts').insert({
           id: 2,
           user_id: 2,
+          title: 'Looking for a homie',
           description: 'Im just lookin for a talented young brother to roll me up some quality',
           budget: 4200,
         })
