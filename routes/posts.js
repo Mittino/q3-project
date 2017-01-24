@@ -17,7 +17,8 @@ router.get('/', (req, res) => {
     .join('users', 'posts.user_id', '=', 'users.id')
     .join('post_skills', 'posts.id', '=', 'post_skills.post_id')
     .join('skills', 'post_skills.skill_id', '=', 'skills.id')
-    .select('user_id', 'users.username', 'users.user_bio', 'skills.skill_name', 'post_skills.skill_id').then((data) => {
+    .select('user_id', 'users.username', 'users.user_bio', 'skills.skill_name', 'post_skills.skill_id')
+    .then((data) => {
         data = camelizeKeys(data);
 
         let finalData = {}
@@ -42,10 +43,12 @@ router.get('/', (req, res) => {
                 }
             }
         }
-
         res.send(finalData);
-
-    });
+    })
+    .catch((err) => {
+          console.error(err);
+          next(boom.create(400, 'Failed'));
+        });
 });
 //get posts by id
 router.get('/:id', (req, res) => {
@@ -85,7 +88,11 @@ router.get('/:id', (req, res) => {
         }
 
         res.send(finalData);
-    });
+    })
+    .catch((err) => {
+          console.error(err);
+          next(boom.create(400, 'Failed'));
+        });
 });
 
 router.post('/:userId', (req, res, next)=>{
@@ -113,7 +120,37 @@ router.post('/:userId', (req, res, next)=>{
       res.send(addedPost)
     }//closes the else
   })//closes the then
+  .catch((err) => {
+        console.error(err);
+        next(boom.create(400, 'Failed'));
+      });
 })//router.post close
+
+//need delete
+router.delete('/:id', (req,res,next)=>{
+  knex('posts')
+  .where('id', req.params.id)
+  .first()
+  .then((response)=>{
+    if (!response) {
+      next(boom.create(400, 'Post does not exist'));
+    }
+    return knex('posts')
+    .where('id', req.params.id)
+    .del()
+    .then((deleted)=>{
+      res.send(camelizeKeys(deleted))
+    })
+    .catch((err) => {
+          console.error(err);
+          next(boom.create(400, 'Failed'));
+        });
+  })
+  .catch((err) => {
+        console.error(err);
+        next(boom.create(400, 'Failed'));
+      });
+})
 
 // EXPORTS ---------------------------
 module.exports = router;

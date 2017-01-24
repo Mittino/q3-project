@@ -92,7 +92,8 @@ router.post('/', (req, res, next) => {
                         var addingSkills = req.body.skills;
                         if (addingSkills.length === 0) {
                             res.send(newUser);
-                        } else {
+                        }
+                        else {
                             for (var i = 0; i < addingSkills.length; i++) {
                                 knex('user_skills')
                                 .insert({
@@ -135,7 +136,15 @@ router.patch('/:id', (req,res,next)=>{
       delete result[0].password;
       res.send(result)
     })//end second then for update
+    .catch((err) => {
+          console.error(err);
+          next(boom.create(400, 'Failed'));
+        });
   })//end first then
+  .catch((err) => {
+        console.error(err);
+        next(boom.create(400, 'Failed'));
+      });
 })//end router.patch
 
 // EXPORTS ---------------------------
