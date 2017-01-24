@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+// const morgan = require('morgan');
 
 var port = 5000;
 
@@ -20,6 +21,7 @@ var allowCrossDomain = function (req, res, next) {
 };
 
 app.use(allowCrossDomain);
+// app.use(morgan);
 app.use('/api/users', users);
 app.use('/api/posts', posts);
 app.use('/api/comments', comments);

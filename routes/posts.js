@@ -14,6 +14,7 @@ const boom = require('boom');
 
 //get all posts
 router.get('/', (req, res) => {
+  console.log('firing API posts');
     knex('posts')
     .select('posts.id', 'title', 'description', 'location', 'budget', 'img_url', 'created_at')
     .join('users', 'posts.user_id', '=', 'users.id')
@@ -23,13 +24,13 @@ router.get('/', (req, res) => {
     .then((data) => {
         data = camelizeKeys(data);
 
-        let finalData = []
+        let finalData = {}
 
         for (var obj in data) {
             if (finalData[data[obj].id]) {
                 finalData[data[obj].id].skills[data[obj].skillId] = data[obj].skillName
             } else {
-                finalData.push({
+                finalData[data[obj].id] = {
                     "id": data[obj].id,
                     "title": data[obj].title,
                     "description": data[obj].description,
@@ -43,7 +44,7 @@ router.get('/', (req, res) => {
                     "skills": {
                         [data[obj].skillId]: data[obj].skillName
                     }
-                })
+                }
             }
         }
         res.send(finalData);

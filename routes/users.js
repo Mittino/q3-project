@@ -14,6 +14,7 @@ const boom = require('boom');
 
 //get user by id
 router.get('/:id', (req, res, next) => {
+  console.log('firing');
     knex('users')
     .where('users.id', req.params.id)
     .leftJoin('user_skills', 'users.id', '=', 'user_skills.user_id')
