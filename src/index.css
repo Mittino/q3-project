@@ -3,3 +3,16 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+.postsContainer {
+  width: 960px;
+  height: 500px;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 10px;
+  
+}
