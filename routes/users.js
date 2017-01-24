@@ -131,6 +131,8 @@ router.patch('/:id', (req,res,next)=>{
     }, '*')
     .then((result)=>{
       result = camelizeKeys(result);
+      delete result[0].isAdmin;
+      delete result[0].password;
       res.send(result)
     })//end second then for update
   })//end first then
