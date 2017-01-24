@@ -86,7 +86,6 @@ router.get('/:id', (req, res) => {
                 }
             }
         }
-
         res.send(finalData);
     })
     .catch((err) => {
@@ -107,9 +106,6 @@ router.post('/:userId', (req, res, next)=>{
   .insert(newPost, '*')
   .then((addedPost)=> {
     addedPost = camelizeKeys(addedPost);
-    if (req.body.skills.length === 0) {
-      res.send(addedPost)
-    } else {
       for (var skill in req.body.skills) {
         knex('post_skills')
         .insert({
@@ -118,7 +114,6 @@ router.post('/:userId', (req, res, next)=>{
         })
       }
       res.send(addedPost)
-    }//closes the else
   })//closes the then
   .catch((err) => {
         console.error(err);

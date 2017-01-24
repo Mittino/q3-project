@@ -90,10 +90,6 @@ router.post('/', (req, res, next) => {
                     .then((newUser) => {
                       // console.log(newUser);
                         var addingSkills = req.body.skills;
-                        if (addingSkills.length === 0) {
-                            res.send(newUser);
-                        }
-                        else {
                             for (var i = 0; i < addingSkills.length; i++) {
                                 knex('user_skills')
                                 .insert({
@@ -103,13 +99,32 @@ router.post('/', (req, res, next) => {
                                 .then(() => {
                                   res.send(newUser);
                                 })
+                                .catch((err) => {
+                                      console.error(err);
+                                      next(boom.create(400, 'Failed'));
+                                    });
                             } //end for loop for adding skills
-                        } // end else statement
                     }) //hashed password then
+                    .catch((err) => {
+                          console.error(err);
+                          next(boom.create(400, 'Failed'));
+                        });
                 }) // check for username
+                .catch((err) => {
+                      console.error(err);
+                      next(boom.create(400, 'Failed'));
+                    });
             }) //first else statement for email check
+            .catch((err) => {
+                  console.error(err);
+                  next(boom.create(400, 'Failed'));
+                });
         }
     }) //first then
+    .catch((err) => {
+          console.error(err);
+          next(boom.create(400, 'Failed'));
+        });
 }) //overall post
 
 router.patch('/:id', (req,res,next)=>{
