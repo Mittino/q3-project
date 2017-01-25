@@ -47,6 +47,7 @@ router.get('/', (req, res) => {
                 }
             }
         }
+        res.header('Access-Control-Allow-Origin', '*')
         res.send(finalData);
     })
     .catch((err) => {
@@ -91,6 +92,7 @@ router.get('/:id', (req, res) => {
                 }
             }
         }
+        res.header('Access-Control-Allow-Origin', '*')
         res.send(finalData);
     })
     .catch((err) => {
@@ -125,6 +127,7 @@ router.post('/:userId', (req, res, next)=>{
     } //end for loop for adding skills
     return addedPost
   }).then((addedPost)=>{
+    res.header('Access-Control-Allow-Origin', '*')
     res.send(addedPost)
   })
   //closes the then
