@@ -36,6 +36,7 @@ router.get('/:id', (req, res, next) => {
 
         delete output.skillId;
         delete output.id;
+        res.header('Access-Control-Allow-Origin', '*')
         res.send(output)
       // }
 
@@ -150,7 +151,8 @@ router.patch('/:id', (req,res,next)=>{
       result = camelizeKeys(result);
       delete result[0].isAdmin;
       delete result[0].password;
-      res.send(result)
+      res.header('Access-Control-Allow-Origin', '*');
+      res.send(result);
     })//end second then for update
     .catch((err) => {
           console.error(err);

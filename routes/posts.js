@@ -24,11 +24,11 @@ router.get('/', (req, res) => {
     .then((data) => {
         data = camelizeKeys(data);
 
-        let finalData = {}
+        let finalData = {};
 
         for (var obj in data) {
             if (finalData[data[obj].id]) {
-                finalData[data[obj].id].skills[data[obj].skillId] = data[obj].skillName
+                finalData[data[obj].id].skills[data[obj].skillId] = data[obj].skillName;
             } else {
                 finalData[data[obj].id] = {
                     "id": data[obj].id,
