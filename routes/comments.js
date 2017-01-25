@@ -21,6 +21,7 @@ router.get('/:postId', (req, res) => {
   .select('posts.id', 'comment_body', 'comments.created_at', 'users.profile_url', 'users.username', 'comments.user_id')
   .then((data) => {
     data = camelizeKeys(data);
+    res.header('Access-Control-Allow-Origin', '*')
     res.send(data);
   })
   .catch((err) => {
@@ -38,6 +39,7 @@ router.post('/', (req, res, next) =>{
   knex('comments')
   .insert(adding, '*')
   .then((result) => {
+    res.header('Access-Control-Allow-Origin', '*');
     res.send(camelizeKeys(result[0]));
   })
   .catch((err) => {

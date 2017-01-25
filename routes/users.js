@@ -14,6 +14,7 @@ const boom = require('boom');
 
 //get user by id
 router.get('/:id', (req, res, next) => {
+  console.log('firing');
     knex('users')
     .where('users.id', req.params.id)
     .leftJoin('user_skills', 'users.id', '=', 'user_skills.user_id')
@@ -35,6 +36,7 @@ router.get('/:id', (req, res, next) => {
 
         delete output.skillId;
         delete output.id;
+        res.header('Access-Control-Allow-Origin', '*')
         res.send(output)
       // }
 
@@ -149,7 +151,8 @@ router.patch('/:id', (req,res,next)=>{
       result = camelizeKeys(result);
       delete result[0].isAdmin;
       delete result[0].password;
-      res.send(result)
+      res.header('Access-Control-Allow-Origin', '*');
+      res.send(result);
     })//end second then for update
     .catch((err) => {
           console.error(err);
