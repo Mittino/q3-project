@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 
 var port = 5000;
+var cors = require('cors');
+app.use(cors);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
