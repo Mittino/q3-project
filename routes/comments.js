@@ -13,12 +13,13 @@ const boom = require('boom');
 //ROUTES ------------------------------------------------
 
 //get comments by post id
-router.get('/:postId', (req, res) => {
+router.get('/:postId', (req, res, next) => {
   knex('posts')
   .where('posts.id', req.params.postId)
   .join('comments', 'posts.id', '=', 'comments.post_id')
   .join('users', 'comments.user_id', '=', 'users.id')
   .select('posts.id', 'comment_body', 'comments.created_at', 'users.profile_url', 'users.username', 'comments.user_id')
+  .orderBy('comments.created_at')
   .then((data) => {
     data = camelizeKeys(data);
     res.header('Access-Control-Allow-Origin', '*')
