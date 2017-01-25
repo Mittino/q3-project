@@ -1,11 +1,12 @@
 'use strict';
 
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 var port = 5000;
-var cors = require('cors');
-app.use(cors);
+
+app.use(cors());
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());

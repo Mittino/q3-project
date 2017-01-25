@@ -99,7 +99,7 @@ router.post('/', (req, res, next) => {
                                   user_id: newUser[0].id
                                 }, '*')
                                 .then(() => {
-                                  res.header('Access-Control-Allow-Origin', '*');
+                                  // res.header('Access-Control-Allow-Origin', '*');
                                   res.send(newUser);
                                 })
                                 .catch((err) => {
