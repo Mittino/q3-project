@@ -43,6 +43,17 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+//GET users by username
+router.get('/username/:username', (req, res, next) => {
+  var username = req.params.username;
+
+  knex('users')
+  .where('username', username)
+  .then((userData) => {
+    res.send(userData[0]);
+  });
+});
+
 //POST to users -----------------------------------
 
 router.post('/', (req, res, next) => {
