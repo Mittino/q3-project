@@ -104,10 +104,10 @@ router.get('/:id', (req, res) => {
 router.post('/:userId', (req, res, next)=>{
   var newPost = {
     user_id: req.params.userId,
+    title: req.body.title,
     description: req.body.description,
     location: req.body.location,
     budget: req.body.budget,
-    img_url: req.body.imgUrl
   }
   knex('posts')
   .insert(newPost, '*')
