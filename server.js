@@ -11,7 +11,7 @@ app.use(cors());
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-const users = require('./routes/users');
+// const users = require('./routes/users');
 const posts = require('./routes/posts');
 const comments = require('./routes/comments');
 const skills = require('./routes/skills')
@@ -24,7 +24,7 @@ const skills = require('./routes/skills')
 // };
 //
 // app.use(allowCrossDomain);
-app.use('/api/users', users);
+// app.use('/api/users', users);
 app.use('/api/posts', posts);
 app.use('/api/comments', comments);
 app.use('/api/skills', skills);
