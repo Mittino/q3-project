@@ -115,29 +115,29 @@ router.post('/', (req, res, next) => {
                                 })
                                 .catch((err) => {
                                       console.error(err);
-                                      next(boom.create(400, 'Failed'));
+                                      next(boom.create(400, 'Failed1'));
                                     });
                             } //end for loop for adding skills
                     }) //hashed password then
                     .catch((err) => {
                           console.error(err);
-                          next(boom.create(400, 'Failed'));
+                          next(boom.create(400, 'Failed2'));
                         });
                 }) // check for username
                 .catch((err) => {
                       console.error(err);
-                      next(boom.create(400, 'Failed'));
+                      next(boom.create(400, 'Failed3'));
                     });
             }) //first else statement for email check
-            .catch((err) => {
-                  console.error(err);
-                  next(boom.create(400, 'Failed'));
-                });
+            // .catch((err) => {
+            //       console.error(err);
+            //       next(boom.create(400, 'Failed4'));
+            //     });
         }
     }) //first then
     .catch((err) => {
           console.error(err);
-          next(boom.create(400, 'Failed'));
+          next(boom.create(400, 'Failed5'));
         });
 }) //overall post
 

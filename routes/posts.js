@@ -131,10 +131,10 @@ router.post('/:userId', (req, res, next)=>{
     res.send(addedPost)
   })
   //closes the then
-  .catch((err) => {
-        console.error(err);
-        next(boom.create(400, 'Failed'));
-      });
+  // .catch((err) => {
+  //       console.error(err);
+  //       next(boom.create(400, 'Failed'));
+  //     });
 })//router.post close
 
 //need delete
