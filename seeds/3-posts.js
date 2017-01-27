@@ -12,6 +12,7 @@ exports.seed = function(knex, Promise) {
           title: 'Pawnee Painting Needed - Parks Department',
           description: 'The parks department is looking for new painting for the city hall building!',
           budget: 150,
+          location: 'Pawnee, IN'
         }),
         knex('posts').insert({
           id: 2,
@@ -19,6 +20,7 @@ exports.seed = function(knex, Promise) {
           title: 'Looking for Amazing Art',
           description: 'I\'m just lookin for a talented artist to help create masterpieces for Entertainment720!',
           budget: 4200,
+          location: 'Pawnee, IN'
         }),
         knex('posts').insert({
           id: 4,
@@ -26,6 +28,7 @@ exports.seed = function(knex, Promise) {
           title: 'Art is cool',
           description: 'Sure I like art! ',
           budget: 0,
+          location: 'Pawnee, IN'
         }),
         knex('posts').insert({
           id: 3,
@@ -33,6 +36,7 @@ exports.seed = function(knex, Promise) {
           title: 'Quilt Needed',
           description: 'My bestie Lesie needs a new friendship quilt',
           budget: 100,
+          location: 'Pawnee, IN'
         })
         .then(() => {
           return knex.raw("SELECT setval('posts_id_seq', (SELECT MAX(id) FROM posts))");
