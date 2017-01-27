@@ -7,7 +7,7 @@
     "react-scripts": "0.8.5"
   },
   "dependencies": {
-    "bcrypt-as-promised": "^1.1.0",
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.16.0",
     "boom": "^4.2.0",
     "cors": "^2.8.1",

@@ -7,7 +7,7 @@ const router = express.Router();
 const knex = require('../knex');
 
 const {camelizeKeys, decamelizeKeys} = require('humps');
-const bcrypt = require('bcrypt-as-promised');
+const bcrypt = require('bcrypt');
 const boom = require('boom');
 
 //ROUTES ------------------------------------------------
