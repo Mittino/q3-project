@@ -9,16 +9,30 @@ exports.seed = function(knex, Promise) {
         knex('posts').insert({
           id: 1,
           user_id: 1,
-          title: 'A serious job',
-          description: 'I need someone to paint the inside of my dungeon',
+          title: 'Pawnee Painting Needed - Parks Department',
+          description: 'The parks department is looking for new painting for the city hall building!',
           budget: 150,
         }),
         knex('posts').insert({
           id: 2,
-          user_id: 2,
-          title: 'Looking for a homie',
-          description: 'Im just lookin for a talented young brother to roll me up some quality',
+          user_id: 3,
+          title: 'Looking for Amazing Art',
+          description: 'I\'m just lookin for a talented artist to help create masterpieces for Entertainment720!',
           budget: 4200,
+        }),
+        knex('posts').insert({
+          id: 3,
+          user_id: 4,
+          title: 'Art is cool',
+          description: 'Sure I like art! ',
+          budget: 0,
+        }),
+        knex('posts').insert({
+          id: 4,
+          user_id: 5,
+          title: 'Painting needed for my house',
+          description: 'My house could use another painting. ',
+          budget: 100,
         })
         .then(() => {
           return knex.raw("SELECT setval('posts_id_seq', (SELECT MAX(id) FROM posts))");
