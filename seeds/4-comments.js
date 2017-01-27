@@ -9,26 +9,26 @@ exports.seed = function(knex, Promise) {
         knex('comments').insert({
           id: 1,
           user_id: 1,
-          post_id: 2,
-          comment_body: 'Yo snoop its ya homie Jeremy. Ive been working on my skillzz and I would be up to the task.'
+          post_id: 4,
+          comment_body: 'Ann you beautiful thing - I will paint for you!'
         }),
         knex('comments').insert({
           id: 2,
-          user_id: 1,
-          post_id: 2,
-          comment_body: 'Yo snoop its ya homie Jeremy, again. Ive got some sick new beats to drop on yo face.'
+          user_id: 5,
+          post_id: 3,
+          comment_body: 'What kind of art are you looking for?'
         }),
         knex('comments').insert({
           id: 3,
-          user_id: 1,
+          user_id: 3,
           post_id: 2,
-          comment_body: 'Yo snoop its ya homie Jeremy ... yet again. You aint done returned my calls B, where is da luv?'
+          comment_body: 'Art is great. Sparklesuds.'
         }),
         knex('comments').insert({
           id: 4,
-          user_id: 2,
+          user_id: 4,
           post_id: 1,
-          comment_body: 'Yo its snoop-lion here. Everyone check out my new dope ass EP!'
+          comment_body: 'I can art!'
         })
         .then(() => {
           return knex.raw("SELECT setval('comments_id_seq', (SELECT MAX(id) FROM comments))");
