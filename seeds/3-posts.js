@@ -21,17 +21,17 @@ exports.seed = function(knex, Promise) {
           budget: 4200,
         }),
         knex('posts').insert({
-          id: 3,
+          id: 4,
           user_id: 4,
           title: 'Art is cool',
           description: 'Sure I like art! ',
           budget: 0,
         }),
         knex('posts').insert({
-          id: 4,
+          id: 3,
           user_id: 5,
-          title: 'Painting needed for my house',
-          description: 'My house could use another painting. ',
+          title: 'Quilt Needed',
+          description: 'My bestie Lesie needs a new friendship quilt',
           budget: 100,
         })
         .then(() => {

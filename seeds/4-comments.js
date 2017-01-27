@@ -9,13 +9,13 @@ exports.seed = function(knex, Promise) {
         knex('comments').insert({
           id: 1,
           user_id: 1,
-          post_id: 4,
-          comment_body: 'Ann you beautiful thing - I will paint for you!'
+          post_id: 3,
+          comment_body: 'Ann you beautiful thing!!'
         }),
         knex('comments').insert({
           id: 2,
           user_id: 5,
-          post_id: 3,
+          post_id: 4,
           comment_body: 'What kind of art are you looking for?'
         }),
         knex('comments').insert({
