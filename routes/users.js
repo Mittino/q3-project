@@ -177,5 +177,26 @@ router.patch('/:id', (req,res,next)=>{
       });
 })//end router.patch
 
+router.delete('/:id', (req,res,next)=>{
+  knex('users')
+  .where('id', req.params.id)
+  .first()
+  .then((response)=>{
+    if (!response) {
+      next(boom.create(400, 'User does not exist'));
+    }
+    let toDelete = camelizeKeys(response)
+    return knex('users')
+    .where('id', toDelete.id)
+    .del()
+    .then((deleted)=>{
+      // delete toDelete.id
+      res.send(toDelete)
+    }).catch((err) => {
+          console.error(err);
+          next(boom.create(400, 'Failed2'));
+        })
+  });
+});
 // EXPORTS ---------------------------
 module.exports = router;
